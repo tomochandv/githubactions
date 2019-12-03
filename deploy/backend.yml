@@ -1,0 +1,51 @@
+
+name: Build
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+       - name: Checkout source code.   # 레포지토리 체크아웃 (master)
+         uses: actions/checkout@master
+       
+       - name: Cache node modules      # node modules 캐싱
+         uses: actions/cache@v1
+         with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+       - name: Install Dependencies    # 의존 파일 설치
+         run: npm install
+       - name: Install Dependencies    # 의존 파일 설치
+         run: npm install --dev
+
+       - name: Build                   # React Build
+         run: npm run build
+       
+       - name: executing remote ssh commands using password
+         uses: appleboy/scp-action@master
+         with:
+            host: ${{ secrets.REMOTE_HOST }} # 호스트 주소
+            username: ${{ secrets.REMOTE_USER }} # 계정
+            password: ${{ secrets.REMOTE_PASSWORD }} # 계정 비번
+            port: 22
+            source: "dist/*, node_modules/*, staging.json" # 배포할 파일들
+            target: "staging" # 배포할 디렉토리
+       - name: ssh
+         uses: appleboy/ssh-action@master
+         with:
+            host: ${{ secrets.REMOTE_HOST }}
+            username: ${{ secrets.REMOTE_USER }}
+            password: ${{ secrets.REMOTE_PASSWORD }}
+            port: 22
+            script: |         # 파일 배포후 실행할 스크립트
+              cd staging
+              pm2 start staging.json
+          

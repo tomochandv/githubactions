@@ -1,0 +1,40 @@
+{
+  "name": "githubactions",
+  "version": "1.0.0",
+  "description": "Github actions를 이용 하여 빌드하고 배포하는 법을 담았습니다.\r 실제로 검색을 해도 아직 나온지 얼마 되지않은 서비스이기에 문서가 많이 있지않습니다.(특히 한글은 찾아보기가 힘드네요)\r Github의 도큐먼트를 봐도 실제로 상용에 적용 하기에는 많은 시간과 스택보어플로어를 봐야 하는 단점이 있기에\r 혹시나 구글링을 하시는 분들을 위해 올립니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon ./index.js --exec babel-node",
+    "build": "babel src -d dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomochandv/githubactions.git"
+  },
+  "author": "tomochan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tomochandv/githubactions/issues"
+  },
+  "homepage": "https://github.com/tomochandv/githubactions#readme",
+  "devDependencies": {
+    "@babel/cli": "^7.4.3",
+    "@babel/core": "^7.4.3",
+    "@babel/node": "^7.2.2",
+    "@babel/plugin-proposal-class-properties": "^7.4.0",
+    "@babel/plugin-transform-runtime": "^7.4.0",
+    "@babel/polyfill": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime": "^7.4.3",
+    "babel-loader": "^8.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "nodemon": "^1.18.11"
+  },
+  "dependencies": {
+    "koa": "^2.7.0"
+  }
+}
